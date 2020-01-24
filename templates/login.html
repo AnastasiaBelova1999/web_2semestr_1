@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+  <div class="col-md-8 my-4 border border-white rounded" id="main">
+    <div class="container text-center">
+        <form class='form' method="post">
+            <p><input type=text class='form-control mt-2' placeholder='username' name='username'>
+                <p><input type=password class='form-control mt-2' placeholder='password' name='password'>
+                    <p><input type=submit class='btn btn-success' value='Войти'>
+        </form>
+        {% if not flag %}
+        <p style='color:red'>Неправильный логин или пароль</p>
+        {% endif %}
+    </div>
+    </div>
+
+</body>
+</html>

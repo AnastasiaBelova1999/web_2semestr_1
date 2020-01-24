@@ -1,0 +1,75 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/">Лабороторная работа 4</a>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" style="color:pink;"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/sub">Абоненты</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/tariff">Тарифы</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/town">Города</a>
+      </li>
+    </ul>
+      <h4 class="text-white mr-3">{{ login }}</h4>
+      <a href="logout"><button type="button" class="btn btn-light">Разлогинься</button></a>
+  </div>
+</nav>
+    <div class="d-flex justify-content-center">
+	<div class="content text-center">
+
+        <h2 class="text-center mb-5">Таблица активных абонентов</h2>
+                 <table class="table text-center">
+  <thead>
+  <a href="/sub/new">Добавить нового абонета</a>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Полное Имя</th>
+        <th scope="col">Город</th>
+        <th scope="col">Тариф</th>
+               </tr>
+  </thead>
+  <tbody>
+  {% for sub in subs %}
+  <tr>
+      <th scope="row">{{ sub["id"] }}</th>
+      <td>{{ sub["full_name"]  }}</td>
+      <td>{{ sub["town"]  }}</td>
+      <td>{{ sub["tariff"]  }}</td>
+      <td><form action="/sub/edit" method="POST">
+						<input type="hidden" name="id" value="{{ sub["id"] }}">
+                        <input type="hidden" name="full_name" value="{{ sub["full_name"] }}">
+                         <input type="hidden" name="town_id" value="{{ sub["town_id"] }}">
+                        <input type="hidden" name="tariff_id" value="{{ sub["tariff_id"] }}">
+						<button type="submit" class="btn btn-primary">edit</button>
+					</form></td>
+  <td><form action="/sub/delete" method="POST">
+						<input type="hidden" name="id" value="{{ sub["id"] }}">
+                        <input type="hidden" name="full_name" value="{{ sub["full_name"] }}">
+                         <input type="hidden" name="town_id" value="{{ sub["town_id"] }}">
+                        <input type="hidden" name="tariff_id" value="{{ sub["tariff_id"] }}">
+						<button type="submit" class="btn btn-primary">delete</button>
+					</form></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+        </table>
+    </div>
+    </div>
+</body>
+</html>
