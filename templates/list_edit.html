@@ -1,0 +1,96 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/">Лабораторная работа 4</a>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" style="color:pink;"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/list">Список обращений</a>
+          <a class="nav-link" href="/list/new">Добавить обращение</a>
+      </li>
+    </ul>
+      <h4 class="text-white mr-3">{{ login }}</h4>
+      <a href="logout"><button type="button" class="btn btn-light">Разлогинься</button></a>
+  </div>
+</nav>
+<a class="navbar-brand" href="/">Белова Анастасия</a>
+    <div class="content text-center">
+        <h4 class="text-center">Add edit</h4>
+         <div class="col-md-4 my-4 border border-white rounded container text-center" id="main">
+
+    <div class="container text-center">
+        <div class="container text-center">
+        <form class='form' method="post" action="/list/edit/submit">
+
+            <div class="form-group">
+                <label for="data">Дата</label>
+                <input type="date" class="form-control" id="data" placeholder="data" name="data" value="{{ sub["date"] }}">
+            </div>
+
+            <div class="form-group">
+                 <label for="type_id">Тип обращения</label>
+                <select name = "type_id">
+                    {% for type in types %}
+                        <option {% if type.id == sub["type_id"] %}
+                        selected
+                        {% endif %} value={{ type.id }}>{{ type.title }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="status_id">Статус обращения</label>
+                <select name = "status_id">
+                    {% for status in statuss %}
+                         <option {% if status.id == sub["status_id"] %}
+                         selected
+                         {% endif %} value={{ status.id }}>{{ status.title }}</option>
+                     {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Сообщение</label>
+                <input type="text" class="form-control" id="message" placeholder="message" name="message" value="{{ sub["message"] }}">
+            </div>
+
+            <input type="hidden" value="{{ sub["list_id"]  }}" name = "id">
+             <input type=submit class='btn btn-success' value='Изменить'>
+        </form>
+    </div>
+    </div>
+         <thead>
+<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false" id ="error_insert">
+  <div class="toast-header">
+    <strong class="mr-auto">ADMIN</strong>
+    <small>Когда то давно</small>
+    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="toast-body">
+    Что то не так проверьте данные или попробуйте позже
+  </div>
+</div>
+         </thead>
+         </div>
+    </div>
+</body>
+{% if insert_false %}
+<script>
+    $('#error_insert').toast('show')
+</script>
+{% endif %}
+</html>

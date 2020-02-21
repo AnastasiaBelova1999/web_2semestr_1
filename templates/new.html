@@ -13,20 +13,15 @@
   <a class="navbar-brand" href="/">Лабораторная работа 4</a>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
       <li class="nav-item">
         <a class="nav-link" style="color:pink;"></a>
       </li>
-        {% if authorization %}
       <li class="nav-item">
         <a class="nav-link" href="/list">Список обращений</a>
       </li>
-
-      <li class="nav-item">
+        <li class="nav-item">
         <a class="nav-link" href="/list/new">Добавить обращение</a>
       </li>
-        {% endif %}
-
     </ul>
         {% if authorization %}
       <h4 class="text-white mr-3">{{ login }}</h4>
@@ -34,42 +29,67 @@
         {% endif %}
   </div>
 </nav>
- <a class="navbar-brand" href="/">Белова Анастасия</a>
-	<div class="content">
-
-	<h2 class="text-center mb-5">Главная страница</h2>
-       {% if not authorization %}
-	    <h4 class="text-center">Login</h4>
-         <div class="col-md-4 my-4 border border-white rounded container text-center" id="main">
+<a class="navbar-brand" href="/">Белова Анастасия</a>
+<div class="col-md-4 my-4 border border-white rounded container text-center" id="main">
 
     <div class="container text-center">
-        <form class='form' method="post" action="/">
-            <p><input type=text class='form-control mt-2' placeholder='username' name='username'>
-                <p><input type=password class='form-control mt-2' placeholder='password' name='password'>
-                    <p><input type=submit class='btn btn-primary' value='Войти'>
-        </form>
-        {% endif %}
+        <form class='form' method="post" action="/list/new">
 
+            <div class="form-group">
+                <label for="data">Дата</label>
+                <input type="date" class="form-control" id="data" placeholder="data" name="data" value="{{ data }}">
+            </div>
+
+            <div class="form-group">
+                <label for="login">Логин</label>
+                <input type="text" class="form-control" id="login_users" placeholder="login_users" name="login_users" value="{{ login_users }}">
+            </div>
+
+            <div class="form-group">
+                 <label for="type_id">Тип обращения</label>
+                <select name = "type_id">
+                    {% for type in types %}
+                    <option value={{ type.id }}>{{ type.title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="status_id">Статус обращения</label>
+                <select name = "status_id">
+                    {% for stat in status %}
+                     <option value={{ stat.id }}>{{ stat.title }}</option>
+                     {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Сообщение</label>
+                <input type="text" class="form-control" id="message" placeholder="message" name="message" value="{{ message }}">
+            </div>
+
+            <input type="hidden" value="{{ id }}" name = "older_id">
+             <input type=submit class='btn btn-success' value='Добавить'>
+        </form>
     </div>
-    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false" id ="error_login">
+</div>
+<thead>
+<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false" id ="error_insert">
   <div class="toast-header">
     <strong class="mr-auto">ADMIN</strong>
-    <small>Сейчас:</small>
+    <small>Когда то давно</small>
     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="toast-body">
-    Вы ввели не правильный логин или пароль
+    Что то не так проверьте данные или попробуйте позже
   </div>
 </div>
-</div>
 </body>
-{% if login_false %}
-    <script>
-    #вызов_уведомления
-    $('#error_login').toast('show')
-
+{% if insert_false %}
+<script>
+    $('#error_insert').toast('show')
 </script>
 {% endif %}
 </html>
